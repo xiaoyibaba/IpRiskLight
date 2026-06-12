@@ -2,9 +2,20 @@
 
 常驻 macOS 状态栏的 IP 风险监测小工具:定时调用 [ipdata.co](https://ipdata.co)(免费额度 1500 次/天)检测当前出口 IP,在状态栏盾牌图标右下角用红/黄/绿圆点提示风险,点击图标查看详情。
 
+## 安装
+
+```sh
+./release.sh        # 生成 dist/IpRiskLight-1.0.dmg
+open dist/IpRiskLight-1.0.dmg
+```
+
+双击打开 DMG,把 IpRiskLight 拖入旁边的 Applications 快捷方式即完成安装,之后从「启动台 / 应用程序」启动。
+
+> 注意:应用为 ad-hoc 签名(无 Apple 开发者证书)。本机构建本机安装没有任何问题;若把 DMG 发给其他人,首次打开需在 app 上右键 →「打开」绕过 Gatekeeper 提示。正式对外分发需要 Apple Developer ID 签名 + 公证。
+
 ## 使用
 
-1. 构建并运行:
+1. 开发调试可直接构建运行:
 
    ```sh
    ./build.sh
