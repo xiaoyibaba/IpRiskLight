@@ -34,6 +34,7 @@ final class RiskMonitor {
     }
 
     private let service = IPDataService()
+    private let notifications = NotificationService()
     private var timer: Timer?
     private let pathMonitor = NWPathMonitor()
     private var lastNetworkSignature: String?
@@ -54,6 +55,7 @@ final class RiskMonitor {
         restartTimer()
         startPathMonitor()
         startBlinking()
+        notifications.requestAuthorization()
         Task { await refresh() }
     }
 
@@ -80,6 +82,9 @@ final class RiskMonitor {
         defer { isRefreshing = false }
         do {
             let response = try await service.fetch(apiKey: apiKey)
+            for notice in NotificationPlanner.plan(previous: result, new: response) {
+                notifications.send(notice)
+            }
             result = response
             lastUpdated = Date()
             errorMessage = nil
